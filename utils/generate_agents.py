@@ -41,4 +41,4 @@ for _idx in tqdm.tqdm(range(NB_AGENTS)):
                      )
 
     agent.reset()
-    agent.save("baseline_models/random-agent-{}.pt".format(_idx))
+    agent.save("./baseline_models/random-agent-{}.pt".format(_idx))
