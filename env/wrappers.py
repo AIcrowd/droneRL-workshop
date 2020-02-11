@@ -3,7 +3,11 @@ from collections import OrderedDict
 import gym.spaces as spaces
 import numpy as np
 from gym import ObservationWrapper
-from env.env import Drone, Packet, Dropzone, DeliveryDrones, Skyscraper, Station
+
+try:
+    from env.env import Drone, Packet, Dropzone, DeliveryDrones, Skyscraper, Station
+except ImportError:
+    from .env import Drone, Packet, Dropzone, DeliveryDrones, Skyscraper, Station
 
 
 class CompassQTable(ObservationWrapper):

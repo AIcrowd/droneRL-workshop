@@ -3,7 +3,11 @@ import os.path
 import numpy as np
 import torch
 import tqdm
+import sys 
 
+sys.path.insert(0, "/home/ubuntu/aicrowd_job_factory/evaluators/deepracer_rl_workshop")
+
+"""
 try:
     from env.env import DeliveryDrones
     from env.wrappers import WindowedGridView
@@ -12,11 +16,17 @@ except ImportError:
     from .env.env import DeliveryDrones
     from .env.wrappers import WindowedGridView
     from .helpers.rl_helpers import set_seed
+"""
+
+from env.env import DeliveryDrones
+from env.wrappers import WindowedGridView
+from rl_helpers import set_seed
+from aicrowd_helpers import generate_movie_from_frames
+
 
 from PIL import Image
 import tempfile
 import shutil
-import aicrowd_helpers
 
 class DroneRacerEvaluator:
   def __init__(self, answer_folder_path=".", round=1):
@@ -145,9 +155,11 @@ class DroneRacerEvaluator:
 
         agent_name_mappings = self.get_agent_name_mapping()
         env.env_params["player_name_mappings"] = agent_name_mappings
-
+        
+        print(env.env_params)
         # Gather First Obeservation (state)
         state = env.reset()
+        print("State Keys :", state.keys())
 
         # Episode step loop
         for _step in tqdm.tqdm(range(self.TOTAL_EPISODE_STEPS)):
@@ -201,7 +213,7 @@ class DroneRacerEvaluator:
     # Post Process Video
     print("Generating Video from thumbnails...")
     video_output_path, video_thumb_output_path = \
-        aicrowd_helpers.generate_movie_from_frames(
+        generate_movie_from_frames(
             self.video_directory_path
         )
     print("Videos : ", video_output_path, video_thumb_output_path)
