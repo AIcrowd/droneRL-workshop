@@ -4,9 +4,15 @@ import numpy as np
 import torch
 import tqdm
 
-from env.env import DeliveryDrones
-from env.wrappers import WindowedGridView
-from helpers.rl_helpers import set_seed
+try:
+    from env.env import DeliveryDrones
+    from env.wrappers import WindowedGridView
+    from helpers.rl_helpers import set_seed
+except ImportError:
+    from .env.env import DeliveryDrones
+    from .env.wrappers import WindowedGridView
+    from .helpers.rl_helpers import set_seed
+
 from PIL import Image
 import tempfile
 import shutil
